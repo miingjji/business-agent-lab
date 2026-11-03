@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: add-list-notes-tool
+expected_outcome: |
+  A tool listing files in the notes folder is added and registered; it stays inside NOTES_DIR and returns a readable string when the folder is empty or missing.
+context:
+  scaffold_script: place-files.sh

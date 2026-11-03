@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>서랍다방 · 가을 신메뉴</title>
+<meta name="description" content="서랍다방의 가을 신메뉴 여섯 가지. 서랍을 열어 보세요.">
+<meta property="og:title" content="서랍다방 · 가을 신메뉴">
+<meta property="og:description" content="서랍을 열면 신메뉴가 나옵니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Song+Myung&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* 샘플 콘텐츠: 카페명(서랍다방), 메뉴 6종, 문구는 모두 샘플입니다. 가격·주소·영업시간은 확정 전이라 넣지 않았습니다. */
+  :root {
+    --wall: #b73a18;
+    --wall-deep: #8f2c10;
+    --paper: #f1e4c6;
+    --paper-edge: #d3bf94;
+    --ink: #2a1a10;
+    --seal: #b0261c;
+    --wood: #4a2f1f;
+    --wood-light: #5d3d29;
+    --wood-dark: #2f1d12;
+    --brass: #c99a3f;
+    --brass-dark: #8a6422;
+    --cream: #fff1d6;
+    --ease: cubic-bezier(.2, .8, .2, 1);
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--wall);
+    color: var(--cream);
+    font-family: "Gowun Batang", "Noto Serif KR", serif;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  ::selection { background: var(--ink); color: var(--cream); }
+  :focus-visible { outline: 3px solid var(--cream); outline-offset: 3px; }
+  html { scrollbar-color: var(--wood) var(--wall-deep); }
+
+  .page { max-width: 1040px; margin: 0 auto; padding: 28px 16px 56px; }
+
+  /* 상단 간판 라벨 */
+  .sign { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .seal {
+    flex: none; width: 44px; height: 44px; display: grid; place-items: center;
+    background: var(--seal); color: var(--paper);
+    font-family: "Song Myung", serif; font-size: 1.15rem; line-height: 1;
+    border-radius: 4px; transform: rotate(-4deg);
+    box-shadow: 0 2px 0 rgba(0,0,0,.25), 0 6px 10px rgba(0,0,0,.18);
+  }
+  .sign-name { font-family: "Song Myung", serif; font-size: 1.35rem; letter-spacing: .02em; }
+
+  h1 {
+    margin: 0 0 8px;
+    font-family: "Song Myung", serif; font-weight: 400;
+    font-size: clamp(2.5rem, 9vw, 5.5rem);
+    line-height: 1.08; letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .lede { margin: 0 0 28px; max-width: 34ch; font-size: 1.1rem; color: var(--cream); }
+
+  /* 약장 */
+  .cabinet {
+    list-style: none; margin: 0; padding: 14px;
+    display: grid; gap: 12px; grid-template-columns: 1fr;
+    background:
+      repeating-linear-gradient(92deg, rgba(0,0,0,.14) 0 1px, transparent 1px 7px),
+      linear-gradient(180deg, var(--wood-light), var(--wood));
+    border-radius: 6px;
+    box-shadow: 0 3px 0 var(--wood-dark), 0 22px 30px rgba(40,10,0,.35);
+  }
+  @media (min-width: 640px) { .cabinet { grid-template-columns: repeat(2, 1fr); padding: 18px; gap: 14px; } }
+  @media (min-width: 940px) { .cabinet { grid-template-columns: repeat(3, 1fr); padding: 22px; gap: 16px; } }
+
+  .drawer {
+    position: relative; height: 210px; overflow: hidden;
+    background: var(--wood-dark);
+    border-radius: 3px;
+    box-shadow: inset 0 3px 10px rgba(0,0,0,.6);
+    animation: settle .7s var(--ease) backwards;
+    animation-delay: calc(var(--i) * 70ms);
+  }
+  @keyframes settle { from { transform: translateY(14px); opacity: 0; } }
+
+  /* 서랍 속 내용 (앞판 뒤에 있음) */
+  .inside {
+    position: absolute; inset: 0 0 52px 0; padding: 16px 18px 6px;
+    background: var(--paper); color: var(--ink);
+    display: flex; flex-direction: column; gap: 6px; overflow: hidden;
+  }
+  .inside h2 {
+    margin: 0; font-family: "Song Myung", serif; font-weight: 400;
+    font-size: 1.55rem; line-height: 1.15; letter-spacing: -0.01em;
+  }
+  .inside p { margin: 0; font-size: .98rem; line-height: 1.5; }
+  .inside .parts { margin-top: auto; font-size: .88rem; color: #5a3a24; }
+
+  /* 서랍 앞판 */
+  .front {
+    position: absolute; inset: 0; width: 100%; border: 0; padding: 0; cursor: pointer;
+    display: block; text-align: left; color: var(--ink); font: inherit;
+    background:
+      repeating-linear-gradient(88deg, rgba(0,0,0,.10) 0 1px, transparent 1px 9px),
+      linear-gradient(180deg, #6a4630, #54351f);
+    border-radius: 3px;
+    box-shadow: 0 6px 12px rgba(0,0,0,.45);
+    transition: transform .55s var(--ease);
+  }
+  .drawer[data-open="true"] .front { transform: translateY(calc(100% - 52px)); }
+  .front:hover { filter: brightness(1.08); }
+
+  .plate {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -62%);
+    width: min(62%, 220px); padding: 10px 8px 8px; text-align: center;
+    background: var(--paper); border: 1.5px solid var(--paper-edge); border-radius: 2px;
+    box-shadow: 0 2px 0 rgba(0,0,0,.35);
+    display: grid; gap: 2px;
+  }
+  .drawer[data-open="true"] .plate { top: 26px; transform: translate(-50%, -50%); width: min(46%, 170px); padding: 4px 6px; }
+  .drawer[data-open="true"] .plate small { display: none; }
+  .plate b { font-family: "Song Myung", serif; font-weight: 400; font-size: 1.7rem; line-height: 1.1; color: var(--ink); }
+  .drawer[data-open="true"] .plate b { font-size: 1.1rem; }
+  .plate small { font-size: .82rem; color: #5a3a24; }
+
+  .knob {
+    position: absolute; left: 50%; bottom: 14px; width: 26px; height: 26px; margin-left: -13px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #f1cf84, var(--brass) 45%, var(--brass-dark));
+    box-shadow: 0 3px 4px rgba(0,0,0,.5);
+  }
+  .drawer[data-open="true"] .knob { bottom: 12px; }
+  .hint { position: absolute; right: 12px; bottom: 16px; font-size: .78rem; color: #e9d3ab; }
+  .drawer[data-open="true"] .hint { display: none; }
+
+  /* 하단 액션 */
+  .actions { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .btn {
+    font: inherit; font-weight: 700; cursor: pointer;
+    padding: 14px 22px; min-height: 48px;
+    background: var(--paper); color: var(--ink);
+    border: 0; border-radius: 3px;
+    box-shadow: 0 3px 0 var(--wood-dark);
+    transition: transform .2s var(--ease), box-shadow .2s var(--ease);
+  }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 0 var(--wood-dark); }
+  .btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--wood-dark); }
+  .btn.ghost { background: transparent; color: var(--cream); box-shadow: inset 0 0 0 2px var(--cream); }
+  .status { font-size: .95rem; min-height: 1.5em; }
+
+  footer { margin-top: 40px; font-size: .9rem; color: var(--cream); max-width: 46ch; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .drawer { animation: none; }
+    .front, .btn { transition: none; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="sign">
+    <span class="seal" aria-hidden="true">서랍</span>
+    <span class="sign-name">서랍다방</span>
+  </div>
+
+  <h1>서랍을 열면<br>가을 신메뉴가 나와요</h1>
+  <p class="lede">여섯 개의 서랍마다 이번 계절의 새 메뉴가 하나씩 들어 있습니다.</p>
+
+  <ul class="cabinet" id="cabinet"></ul>
+
+  <div class="actions">
+    <button class="btn" id="toggleAll" type="button">서랍 전부 열기</button>
+    <button class="btn ghost" id="share" type="button">친구에게 보내기</button>
+    <span class="status" id="status" role="status" aria-live="polite"></span>
+  </div>
+
+  <footer>
+    <p>매장 위치와 영업시간은 곧 이곳에 알려드릴게요.</p>
+  </footer>
+</main>
+
+<script>
+  // 샘플 메뉴. 실제 메뉴로 이 배열만 바꾸면 됩니다.
+  const MENU = [
+    { label: "대추", name: "대추 쌍화 라떼", desc: "진하게 달인 대추에 계피와 생강을 더하고 우유를 부드럽게 올렸습니다.", parts: "대추 · 계피 · 생강 · 우유", open: true },
+    { label: "오미자", name: "오미자 에이드", desc: "하룻밤 우린 오미자의 붉은 빛에 탄산을 더한 상큼한 한 잔.", parts: "오미자 · 탄산수 · 레몬" },
+    { label: "흑임자", name: "흑임자 크림 라떼", desc: "볶은 흑임자 크림을 에스프레소 위에 얹어 고소하게 마무리했습니다.", parts: "흑임자 · 에스프레소 · 우유" },
+    { label: "유자", name: "유자 모과 티", desc: "유자청과 모과를 따뜻하게 우려 겨울이 오기 전에 마시는 차.", parts: "유자 · 모과 · 꿀" },
+    { label: "쑥", name: "쑥 인절미 스콘", desc: "쑥 반죽에 인절미를 박아 겉은 바삭, 속은 쫀득하게 구웠습니다.", parts: "쑥 · 인절미 · 콩가루" },
+    { label: "배", name: "배 도라지 콤포트", desc: "배와 도라지를 조려 차갑게 낸 디저트, 요거트와 함께 드세요.", parts: "배 · 도라지 · 요거트" }
+  ];
+
+  const cabinet = document.getElementById("cabinet");
+  const status = document.getElementById("status");
+
+  MENU.forEach((m, i) => {
+    const li = document.createElement("li");
+    li.className = "drawer";
+    li.style.setProperty("--i", i);
+    li.dataset.open = m.open ? "true" : "false";
+    li.innerHTML = `
+      <div class="inside">
+        <h2>${m.name}</h2>
+        <p>${m.desc}</p>
+        <span class="parts">${m.parts}</span>
+      </div>
+      <button class="front" type="button" aria-expanded="${m.open ? "true" : "false"}" aria-label="${m.label} 서랍 ${m.open ? "닫기" : "열기"}">
+        <span class="plate"><b>${m.label}</b><small>${m.name}</small></span>
+        <span class="knob" aria-hidden="true"></span>
+        <span class="hint" aria-hidden="true">당겨 보세요</span>
+      </button>`;
+    cabinet.appendChild(li);
+  });
+
+  function setOpen(drawer, open) {
+    const btn = drawer.querySelector(".front");
+    drawer.dataset.open = open ? "true" : "false";
+    btn.setAttribute("aria-expanded", open);
+    btn.setAttribute("aria-label", btn.querySelector("b").textContent + " 서랍 " + (open ? "닫기" : "열기"));
+  }
+  const drawers = () => [...cabinet.querySelectorAll(".drawer")];
+  const toggleAll = document.getElementById("toggleAll");
+
+  function syncAll() {
+    toggleAll.textContent = drawers().every(d => d.dataset.open === "true") ? "서랍 전부 닫기" : "서랍 전부 열기";
+  }
+
+  cabinet.addEventListener("click", e => {
+    const btn = e.target.closest(".front");
+    if (!btn) return;
+    const d = btn.closest(".drawer");
+    setOpen(d, d.dataset.open !== "true");
+    syncAll();
+  });
+
+  toggleAll.addEventListener("click", () => {
+    const openAll = !drawers().every(d => d.dataset.open === "true");
+    drawers().forEach(d => setOpen(d, openAll));
+    syncAll();
+  });
+
+  document.getElementById("share").addEventListener("click", async () => {
+    const data = { title: document.title, text: "서랍다방 가을 신메뉴, 서랍을 열어 보세요.", url: location.href };
+    try {
+      if (navigator.share) { await navigator.share(data); return; }
+      await navigator.clipboard.writeText(location.href);
+      status.textContent = "링크를 복사했어요.";
+    } catch (err) {
+      if (err && err.name === "AbortError") return;
+      status.textContent = "주소창의 링크를 복사해 보내 주세요.";
+    }
+  });
+  syncAll();
+</script>
+</body>
+</html>
